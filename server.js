@@ -75,26 +75,57 @@ const openDBConnection = () => {
 
     const addEmployee = () => {
         console.log('You are now adding an employee to the employee_tracker database.')
-        db.query('INSERT INTO employee', function (err, res) {
-            if (err) {
-                throw err
-            } else {
-                console.table(res)
-                openDBConnection()
-            }
-            console.log('Employee successfully added.')
-        })
-    }
 
-    const viewRoles = () => {
-        console.log('You are now viewing all current employee roles in the employee_tracker database.')
-        db.query('SELECT * FROM roles', function (err, res) {
-            if (err) {
-                throw err
-            } else {
-                console.table(res)
+        inquirer
+            .prompt([
+                {
+                    type: "input",
+                    name: "first_name",
+                    message: "Employee's First Name:",
+                },
+                {
+                    type: "input",
+                    name: "last_name",
+                    message: "Employee's Last Name:",
+                },
+                {
+                    type: "input",
+                    name: "role_id",
+                    message: "Employee's Role ID:",
+                },
+                {
+                    type: "input",
+                    name: "manager_id",
+                    message: "Employee's Manager ID:",
+                },
+            ])
+
+            .then((response) => {
+                const employee = {
+                    first_name: response.first_name,
+                    last_name: response.last_name,
+                    role_id: response.role_id,
+                    manager_id: response.manager_id
+                }
+
+                db.query('INSERT INTO employee SET ?', employee)
+                console.log('Employee successfully added.')
+                viewEmployees()
+                console.log('See new employee added to the database above^^^')
                 openDBConnection()
-            }
-        })
+            })
+
+
+        const viewRoles = () => {
+            console.log('You are now viewing all current employee roles in the employee_tracker database.')
+            db.query('SELECT * FROM roles', function (err, res) {
+                if (err) {
+                    throw err
+                } else {
+                    console.table(res)
+                    openDBConnection()
+                }
+            })
+        }
     }
 }
