@@ -1,4 +1,4 @@
-const consTab = require('console.table')
+const cTable = require('console.table')
 require('dotenv').config()
 const inquirer = require('inquirer')
 const mysql = require('mysql2')
@@ -40,19 +40,19 @@ const openDBConnection = () => {
                     viewEmployees()
                     break
                 case 'Add New Employee':
-                    newEmployee()
+                    addEmployee()
                     break
                 case 'View All Roles':
                     viewRoles()
                     break
                 case 'Add New Role':
-                    newRole()
+                    addRole()
                     break
                 case 'View All Departments':
                     viewDeps()
                     break
                 case 'Add New Department':
-                    newDep()
+                    addDep()
                     break
                 case 'Exit':
                     console.log('Have a great day. Goodbye!')
@@ -73,6 +73,18 @@ const openDBConnection = () => {
         })
     }
 
+    const addEmployee = () => {
+        console.log('You are now adding an employee to the employee_tracker database.')
+        db.query('INSERT INTO employee', function (err, res) {
+            if (err) {
+                throw err
+            } else {
+                console.table(res)
+                openDBConnection()
+            }
+            console.log('Employee successfully added.')
+        })
+    }
 
     const viewRoles = () => {
         console.log('You are now viewing all current employee roles in the employee_tracker database.')
