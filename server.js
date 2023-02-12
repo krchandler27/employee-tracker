@@ -13,7 +13,7 @@ const db = mysql.createConnection({
 
 db.connect(function (err) {
     if (err) throw err
-    console.log('Connected to the employee_tracker db.:)')
+    console.log('You are now connected to the employee_tracker db.:)')
     openDBConnection()
 })
 
@@ -55,13 +55,14 @@ const openDBConnection = () => {
                     newDep()
                     break
                 case 'Exit':
+                    console.log('Have a great day. Goodbye!')
                     db.end()
                     break
             }
         })
 
     const viewEmployees = () => {
-        console.log('Viewing all employees')
+        console.log('You are now viewing all current employees in the employee_tracker database.')
         db.query('SELECT * FROM employee', function (err, res) {
             if (err) {
                 throw err
