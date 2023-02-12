@@ -1,28 +1,30 @@
 INSERT INTO department (dept_name)
 VALUES ('Sales'),
-('Secretarial'),
 ('Software Development'),
 ('Legal'),
-('Finance');
+('Finance'),
+('Administration');
 
 INSERT INTO roles (title, salary, dept_id)
-VALUES ('Senior Software Developer', 120000, 3),
-('Junior Software Developer', 80000, 3),
-('Account Representative', 95000, 2),
+VALUES ('Senior Software Developer', 120000, 2),
+('Junior Software Developer', 80000, 2),
+('Account Representative', 95000, 1),
 ('Sales Representative', 80000, 1),
 ('Sales Manager', 120000, 1),
-('Accountant', 80000, 5),
-('Secretary', 65000, 2),
+('Accountant', 80000, 4),
+('Secretary', 65000, 5),
 ('Data Analyst', 80000, 1),
-('Paralegal', 90000, 4);
+('Paralegal', 90000, 3),
+('CEO', 350000, 5);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES ("Keri", "Time", 1, NULL),
-("Josiah", "Brown", 2, NULL),
+("Josiah", "Brown", 5, NULL),
 ("Jakob", "Black", 3, NULL),
-("Janalee", "Hironaka", 4, NULL),
-("Jess", "Smith", 5, NULL),
+("Janalee", "Hironaka", 8, 2),
+("Jess", "Smith", 4, 2),
 ("Finn", "Swift", 6, NULL),
-("Jen", "Bachner", 7, NULL),
-("Sheri", "Hindz", 8, NULL),
-("Terri", "Coder", 9, NULL);
+("Jen", "Bachner", 9, NULL),
+("Sheri", "Hindz", 10, NULL),
+("Terri", "Coder", 7, 8),
+("Katie", "Speakman", 2, 1);
