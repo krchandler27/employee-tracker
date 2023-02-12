@@ -4,14 +4,14 @@ const inquirer = require('inquirer')
 const mysql = require('mysql2')
 const app = require('express')
 
-const con = mysql.createConnection({
+const db = mysql.createConnection({
     host: 'localhost',
     user: process.env.DB_USER || 'root',
     password: process.env.DB_PASSWORD,
     database: 'employee_tracker'
 })
 
-con.connect(function (err) {
+db.connect(function (err) {
     if (err) throw err
     console.log('Connected to the employee_tracker db.:)')
     openDBConnection()
@@ -55,24 +55,20 @@ const openDBConnection = () => {
                     newDep()
                     break
                 case 'Exit':
-                    con.end()
+                    db.end()
                     break
             }
         })
-}
 
-
-const viewEmploys = () => {
-    inquirer
-        .createPromptModule([
-            {
-                type: "input",
-                name:
+    const viewEmployees = () => {
+        console.log('Viewing all employees')
+        db.query('SELECT * FROM employee', function (err, res) {
+            if (err) {
+                throw err
+            } else {
+                console.table(res)
+                openDBConnection()
+            }
+        })
     }
-        ])
 }
-
-// Query database
-db.query('SELECT * FROM students', function (err, results) {
-    console.log(results);
-});
