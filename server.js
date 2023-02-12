@@ -1,21 +1,20 @@
-const consTab = require('console.table');
-const doTenv = require('dotenv');
-const inquirer = require('inquirer');
-const mysql = require('mysql2');
-const app = require('express');
-const PORT = process.env.PORT || 3001;
+const consTab = require('console.table')
+require('dotenv').config()
+const inquirer = require('inquirer')
+const mysql = require('mysql2')
+const app = require('express')
 
 const con = mysql.createConnection({
-    host: process.env.DB_HOST || 'localhost',
+    host: 'localhost',
     user: process.env.DB_USER || 'root',
     password: process.env.DB_PASSWORD,
     database: 'employee_tracker'
-});
+})
 
 con.connect(function (err) {
-    if (err) throw err;
+    if (err) throw err
     console.log('Connected to the employee_tracker db.:)')
-    openDBConnection();
+    openDBConnection()
 })
 
 const openDBConnection = () => {
@@ -38,52 +37,42 @@ const openDBConnection = () => {
         .then((response) => {
             switch (response.openingScreen) {
                 case 'View All Employees':
-                    viewEmployees();
-                    break;
+                    viewEmployees()
+                    break
                 case 'Add New Employee':
-                    newEmployee();
-                    break;
+                    newEmployee()
+                    break
                 case 'View All Roles':
-                    viewRoles();
-                    break;
+                    viewRoles()
+                    break
                 case 'Add New Role':
-                    newRole();
-                    break;
+                    newRole()
+                    break
                 case 'View All Departments':
-                    viewDeps();
-                    break;
+                    viewDeps()
+                    break
                 case 'Add New Department':
-                    newDep();
-                    break;
+                    newDep()
+                    break
                 case 'Exit':
-                    Connection.end();
-                    break;
+                    con.end()
+                    break
             }
         })
+}
 
-};
 
+const viewEmploys = () => {
+    inquirer
+        .createPromptModule([
+            {
+                type: "input",
+                name:
+    }
+        ])
+}
 
-// const viewEmploys = () => {
-//     inquirer
-//         .createPromptModule([
-//             {
-//                 type: "input",
-//                 name: 
-//     }
-//         ])
-// }
-
-// // Query database
-// db.query('SELECT * FROM students', function (err, results) {
-//     console.log(results);
-// });
-
-// // Default response for any other request (Not Found)
-// app.use((req, res) => {
-//     res.status(404).end();
-// });
-
-// app.listen(PORT, () => {
-//     console.log(`Server running on port ${PORT}`);
-// });
+// Query database
+db.query('SELECT * FROM students', function (err, results) {
+    console.log(results);
+});
