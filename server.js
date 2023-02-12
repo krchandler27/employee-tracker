@@ -62,8 +62,8 @@ const openDBConnection = () => {
         })
 
     const viewEmployees = () => {
-        console.log('You are now viewing all current employees in the employee_tracker database.')
-        db.promise().query('SELECT * FROM employee', function (err, res) {
+        console.log('You are viewing all current employees in the employee_tracker database.')
+        db.query('SELECT * FROM employee', function (err, res) {
             if (err) {
                 throw err
             } else {
@@ -74,7 +74,7 @@ const openDBConnection = () => {
     }
 
     const addEmployee = () => {
-        console.log('You are now adding an employee to the employee_tracker database.')
+        console.log('You are adding a new employee to the employee_tracker database.')
 
         inquirer
             .prompt([
@@ -108,7 +108,7 @@ const openDBConnection = () => {
                     manager_id: response.manager_id
                 }
                 // Inserting gathered info from inquirer into the employee table in the database
-                db.promise().query('INSERT INTO employee SET ?', employee)
+                db.query('INSERT INTO employee SET ?', employee)
 
                 // Displaying table with new employee added.
                 db.query('SELECT * FROM employee', function (err, res) {
