@@ -17,12 +17,12 @@ VALUES ('Senior Developer', 120000, 3),
 ('Paralegal', 90000, 4);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Keri", "Time", 01, NULL),
-("Josiah", "Brown", 02, 01),
-("Jakob", "Black", 03, NULL),
-("Janalee", "Hironaka", 04, NULL),
-("Jess", "Smith", 05, 03),
-("Finn", "Swift", 06, NULL),
-("Jen", "Bachner", 07, NULL),
-("Sheri", "Hindz", 08, NULL),
-("Terri", "Coder", 09, NULL);
+VALUES ("Keri", "Time", 1, NULL),
+("Josiah", "Brown", 2, NULL),
+("Jakob", "Black", 3, NULL),
+("Janalee", "Hironaka", 4, NULL),
+("Jess", "Smith", 5, NULL),
+("Finn", "Swift", 6, NULL),
+("Jen", "Bachner", 7, NULL),
+("Sheri", "Hindz", 8, NULL),
+("Terri", "Coder", 9, NULL);

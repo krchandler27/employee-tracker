@@ -37,7 +37,7 @@ const startInquire = () => {
         }
     ])
         .then((response) => {
-            switch (response.opningScreen) {
+            switch (response.openingScreen) {
                 case 'View All Employees':
                     viewEmploys();
                     break;
@@ -59,32 +59,31 @@ const startInquire = () => {
                 case 'Exit':
                     Connection.end();
                     break;
-            })
-        .catch((err)) => {
-    if (err) throw err;
-}
+            }
+        })
+              
 };
 
 
-const viewEmploys = () => {
-    inquirer
-        .createPromptModule([
-            {
-                type: "input",
-                name: 
-    }
-        ])
-}
+// const viewEmploys = () => {
+//     inquirer
+//         .createPromptModule([
+//             {
+//                 type: "input",
+//                 name: 
+//     }
+//         ])
+// }
 
-// Query database
-db.query('SELECT * FROM students', function (err, results) {
-    console.log(results);
-});
+// // Query database
+// db.query('SELECT * FROM students', function (err, results) {
+//     console.log(results);
+// });
 
-// Default response for any other request (Not Found)
-app.use((req, res) => {
-    res.status(404).end();
-});
+// // Default response for any other request (Not Found)
+// app.use((req, res) => {
+//     res.status(404).end();
+// });
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
