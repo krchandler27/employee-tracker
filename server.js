@@ -37,32 +37,34 @@ const startInquire = () => {
         }
     ])
         .then((response) => {
-        case 'View All Employees':
-viewEmploys();
-break;
-            case 'Add New Employee':
-newEmploy();
-break;
-            case 'View All Roles':
-viewRoles();
-break;
-            case 'Add New Role':
-newRole();
-break;
-            case 'View All Departments':
-viewDeps();
-break;
-            case 'Add New Department':
-newDep();
-break;
-            case 'Exit':
-Connection.end();
-break;
-    })
-    .catch ((err)) => {
+            switch (response.opningScreen) {
+                case 'View All Employees':
+                    viewEmploys();
+                    break;
+                case 'Add New Employee':
+                    newEmploy();
+                    break;
+                case 'View All Roles':
+                    viewRoles();
+                    break;
+                case 'Add New Role':
+                    newRole();
+                    break;
+                case 'View All Departments':
+                    viewDeps();
+                    break;
+                case 'Add New Department':
+                    newDep();
+                    break;
+                case 'Exit':
+                    Connection.end();
+                    break;
+            })
+        .catch((err)) => {
     if (err) throw err;
 }
 };
+
 
 const viewEmploys = () => {
     inquirer
