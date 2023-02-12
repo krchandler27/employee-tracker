@@ -6,8 +6,8 @@ VALUES ('Sales'),
 ('Finance');
 
 INSERT INTO roles (title, salary, dept_id)
-VALUES ('Senior Developer', 120000, 3),
-('Junior Developer', 80000, 3),
+VALUES ('Senior Software Developer', 120000, 3),
+('Junior Software Developer', 80000, 3),
 ('Account Representative', 95000, 2),
 ('Sales Representative', 80000, 1),
 ('Sales Manager', 120000, 1),

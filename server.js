@@ -72,4 +72,17 @@ const openDBConnection = () => {
             }
         })
     }
+
+
+    const viewRoles = () => {
+        console.log('You are now viewing all current employee roles in the employee_tracker database.')
+        db.query('SELECT * FROM roles', function (err, res) {
+            if (err) {
+                throw err
+            } else {
+                console.table(res)
+                openDBConnection()
+            }
+        })
+    }
 }
