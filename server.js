@@ -3,24 +3,23 @@ const doTenv = require('dotenv');
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
 const app = require('express');
+const PORT = process.env.PORT || 3001;
 
-const con = mysql.createConnection(
-    {
-        host: 'localhost',
-        user: 'root',
-        password: process.env.DB_PASSWORD,
-        database: 'employee_tracker'
-    }
-);
+const con = mysql.createConnection({
+    host: process.env.DB_HOST || 'localhost',
+    user: process.env.DB_USER || 'root',
+    password: process.env.DB_PASSWORD,
+    database: 'employee_tracker'
+});
 
 con.connect(function (err) {
     if (err) throw err;
     console.log('Connected to the employee_tracker db.:)')
-    startInquire();
+    openDBConnection();
 })
 
-const startInquire = () => {
-    inquirer.createPromptModule([
+const openDBConnection = () => {
+    inquirer.prompt([
         {
             type: 'list',
             name: 'openingScreen',
@@ -39,10 +38,10 @@ const startInquire = () => {
         .then((response) => {
             switch (response.openingScreen) {
                 case 'View All Employees':
-                    viewEmploys();
+                    viewEmployees();
                     break;
                 case 'Add New Employee':
-                    newEmploy();
+                    newEmployee();
                     break;
                 case 'View All Roles':
                     viewRoles();
@@ -61,7 +60,7 @@ const startInquire = () => {
                     break;
             }
         })
-              
+
 };
 
 
@@ -85,6 +84,6 @@ const startInquire = () => {
 //     res.status(404).end();
 // });
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+// app.listen(PORT, () => {
+//     console.log(`Server running on port ${PORT}`);
+// });
