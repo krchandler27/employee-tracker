@@ -74,29 +74,29 @@ const openDBConnection = () => {
     }
 
     const addEmployee = () => {
-        console.log('You are adding a new employee to the employee_tracker database.')
+        console.log('You are adding a new employee to the database.')
 
         inquirer
             .prompt([
                 {
-                    type: "input",
-                    name: "first_name",
-                    message: "Employee's First Name:",
+                    type: 'input',
+                    name: 'first_name',
+                    message: 'First Name:',
                 },
                 {
-                    type: "input",
-                    name: "last_name",
-                    message: "Employee's Last Name:",
+                    type: 'input',
+                    name: 'last_name',
+                    message: 'Last Name:',
                 },
                 {
-                    type: "input",
-                    name: "role_id",
-                    message: "Employee's Role ID:",
+                    type: 'input',
+                    name: 'role_id',
+                    message: 'Role ID:',
                 },
                 {
-                    type: "input",
-                    name: "manager_id",
-                    message: "Employee's Manager ID:",
+                    type: 'input',
+                    name: 'manager_id',
+                    message: 'Manager ID:',
                 },
             ])
 
@@ -123,18 +123,65 @@ const openDBConnection = () => {
                 }
                 )
             })
-
-
-        const viewRoles = () => {
-            console.log('You are now viewing all current employee roles in the employee_tracker database.')
-            db.query('SELECT * FROM roles', function (err, res) {
-                if (err) {
-                    throw err
-                } else {
-                    console.table(res)
-                    openDBConnection()
-                }
-            })
-        }
     }
+
+    const viewRoles = () => {
+        console.log('You are now viewing all current employee roles in the employee_tracker database.')
+        db.query('SELECT * FROM roles', function (err, res) {
+            if (err) {
+                throw err
+            } else {
+                console.table(res)
+                openDBConnection()
+            }
+        })
+    }
+
+    const addRole = () => {
+        console.log('You are adding a role to the database.')
+        inquirer
+            .prompt([
+                {
+                    type: 'input',
+                    name: 'title',
+                    message: 'Role Title:',
+                },
+                {
+                    type: 'input',
+                    name: 'salary',
+                    message: 'Salary:',
+                },
+                {
+                    type: 'input',
+                    name: 'dept_id',
+                    message: 'Department ID:',
+                }
+            ])
+
+            .then((response) => {
+                const newRole = {
+                    title: response.title,
+                    salary: response.salary,
+                    dept_id: response.dept_id,
+                }
+                // Inserting gathered info from inquirer into the roles table in the database
+                db.query('INSERT INTO roles SET ?', newRole)
+
+                // Displaying table with new role added.
+                db.query('SELECT * FROM roles', function (err, res) {
+                    if (err) {
+                        throw err
+                    }
+                    else {
+                        console.table(res)
+                        console.log('Role successfully added.')
+                        openDBConnection()
+                    }
+                }
+                )
+            })
+
+
+    }
+
 }
