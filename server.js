@@ -22,10 +22,11 @@ const openDBConnection = () => {
         {
             type: 'list',
             name: 'openingScreen',
-            message: 'Choose from below...',
+            message: 'What would you like to do next?',
             choices: [
                 'View All Employees',
                 'Add New Employee',
+                'Update Current Employee',
                 'View All Roles',
                 'Add New Role',
                 'View All Departments',
@@ -41,6 +42,9 @@ const openDBConnection = () => {
                     break
                 case 'Add New Employee':
                     addEmployee()
+                    break
+                case 'Update Current Employee':
+                    updateEmployee()
                     break
                 case 'View All Roles':
                     viewRoles()
@@ -63,7 +67,7 @@ const openDBConnection = () => {
 
     const viewEmployees = () => {
         console.log('You are viewing all current employees in the employee_tracker database.')
-        db.query('SELECT * FROM employee', function (err, res) {
+        db.query('SELECT * FROM employees', function (err, res) {
             if (err) {
                 throw err
             } else {
@@ -74,7 +78,7 @@ const openDBConnection = () => {
     }
 
     const addEmployee = () => {
-        console.log('You are adding a new employee to the database.')
+        console.log('You are adding a new employee to the employee_tracker database.')
 
         inquirer
             .prompt([
@@ -101,17 +105,17 @@ const openDBConnection = () => {
             ])
 
             .then((response) => {
-                const employee = {
-                    first_name: response.first_name,
-                    last_name: response.last_name,
-                    role_id: response.role_id,
-                    manager_id: response.manager_id
-                }
+                const employee = [
+                    response.first_name,
+                    response.last_name,
+                    parseInt(response.role_id),
+                    response.manager_id === 'null' ? null : parseInt(response.manager_id)
+                ]
                 // Inserting gathered info from inquirer into the employee table in the database
-                db.query('INSERT INTO employee SET ?', employee)
+                db.query('INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)', employee)
 
                 // Displaying table with new employee added.
-                db.query('SELECT * FROM employee', function (err, res) {
+                db.query('SELECT * FROM employees', function (err, res) {
                     if (err) {
                         throw err
                     }
@@ -120,8 +124,7 @@ const openDBConnection = () => {
                         console.log('Employee successfully added.')
                         openDBConnection()
                     }
-                }
-                )
+                })
             })
     }
 
@@ -138,7 +141,7 @@ const openDBConnection = () => {
     }
 
     const addRole = () => {
-        console.log('You are adding a role to the database.')
+        console.log('You are adding a new role to the database.')
         inquirer
             .prompt([
                 {
@@ -159,13 +162,13 @@ const openDBConnection = () => {
             ])
 
             .then((response) => {
-                const newRole = {
-                    title: response.title,
-                    salary: response.salary,
-                    dept_id: response.dept_id,
-                }
+                const newRole = [
+                    response.title,
+                    response.salary,
+                    response.dept_id,
+                ]
                 // Inserting gathered info from inquirer into the roles table in the database
-                db.query('INSERT INTO roles SET ?', newRole)
+                db.query('INSERT INTO roles (title, salary, dept_id) VALUES (?, ?, ?)', newRole)
 
                 // Displaying table with new role added.
                 db.query('SELECT * FROM roles', function (err, res) {
@@ -174,14 +177,53 @@ const openDBConnection = () => {
                     }
                     else {
                         console.table(res)
-                        console.log('Role successfully added.')
+                        console.log('Role successfully added. See the new complete list of company roles above^^^.')
                         openDBConnection()
                     }
-                }
-                )
+                })
             })
+    }
 
+    const viewDeps = () => {
+        console.log('You are viewing all current departments in the employee_tracker database.')
+        db.query('SELECT * FROM departments', function (err, res) {
+            if (err) {
+                throw err
+            } else {
+                console.table(res)
+                openDBConnection()
+            }
+        })
+    }
 
+    const addDep = () => {
+        console.log('You are adding a new department to the database.')
+        inquirer
+            .prompt([
+                {
+                    type: 'input',
+                    name: 'dept_name',
+                    message: 'Department Name:',
+                }
+            ])
+
+            .then((response) => {
+             
+                // Inserting gathered info from inquirer into the department table in the database
+                db.query('INSERT INTO departments (dept_name) VALUE (?)', response.dept_name)
+
+                // Displaying table with new department added.
+                db.query('SELECT * FROM departments', function (err, res) {
+                    if (err) {
+                        throw err
+                    }
+                    else {
+                        console.table(res)
+                        console.log('Department successfully added. See the new complete list of departments above^^^.')
+                        openDBConnection()
+                    }
+                })
+            })
     }
 
 }
