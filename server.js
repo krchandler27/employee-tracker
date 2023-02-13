@@ -43,8 +43,8 @@ const openDBConnection = () => {
                 case 'Add New Employee':
                     addEmployee()
                     break
-                case 'Update Current Employee':
-                    updateEmployee()
+                case 'Update Employee Role':
+                    updateEmployeeRole()
                     break
                 case 'View All Roles':
                     viewRoles()
@@ -128,6 +128,10 @@ const openDBConnection = () => {
             })
     }
 
+    // const updateEmployeeRole = () => {
+
+    // }
+
     const viewRoles = () => {
         console.log('You are now viewing all current employee roles in the employee_tracker database.')
         db.query('SELECT * FROM roles', function (err, res) {
@@ -208,7 +212,7 @@ const openDBConnection = () => {
             ])
 
             .then((response) => {
-             
+
                 // Inserting gathered info from inquirer into the department table in the database
                 db.query('INSERT INTO departments (dept_name) VALUE (?)', response.dept_name)
 
