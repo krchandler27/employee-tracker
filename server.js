@@ -66,12 +66,13 @@ const openDBConnection = () => {
         })
 
     const viewEmployees = () => {
-        console.log('You are viewing all current employees in the employee_tracker database.')
+
         db.query('SELECT * FROM employees', function (err, res) {
             if (err) {
                 throw err
             } else {
                 console.table(res)
+                console.log('You are now viewing all current employees in the employee_tracker database.')
                 openDBConnection()
             }
         })
@@ -129,58 +130,41 @@ const openDBConnection = () => {
     }
 
     const updateEmployeeRole = () => {
-        db.query('SELECT * FROM roles', function (err, res) {
-            if (err) {
-                throw err
-            } else {
-                console.table(res)
-            }
-        })
-
-        db.query('SELECT * FROM employees', function (err, res) {
-            if (err) {
-                throw err
-                console.log(err)
-            } else {
-                console.table(res)
-            }
-        })
-        console.log('Scroll up to see current company roles and the list of employees.')
 
         inquirer
             .prompt([
                 {
                     type: 'input',
                     name: 'employee_id',
-                    message: 'Type the id of the employee whose role you would like to change:'
+                    message: 'Enter the ID of the employee whose role you would like to change:'
                 },
                 {
                     type: 'input',
                     name: 'role_id',
-                    message: 'Type the the new role id you would like to assign to this employee:'
+                    message: 'Type the the new Role ID you would like to assign to this employee:'
                 }
             ])
             .then((response) => {
 
-              db.query('UPDATE employees SET (role_id) VALUE (?) WHERE (employee_id) VALUE (?)', response.role_id, response.employee_id)})
-
-                db.query('SELECT * FROM employees', function (err, res) {
+                db.query('UPDATE employees SET role_id=? WHERE id=?', [response.role_id, response.employee_id], function (err, res) {
                     if (err) {
                         throw err
-                        console.log(err)
+
                     } else {
                         console.table(res)
+                        viewEmployees()
+                        console.log("Role ID updated for specified employee.")
                     }
                 })
-                console.log("See role id updated for specified employee.")
-                openDBConnection()
-            }
+            })
+    }
 
     const viewRoles = () => {
         console.log('You are now viewing all current employee roles in the employee_tracker database.')
         db.query('SELECT * FROM roles', function (err, res) {
             if (err) {
                 throw err
+
             } else {
                 console.table(res)
                 openDBConnection()
@@ -216,7 +200,7 @@ const openDBConnection = () => {
                     response.dept_id,
                 ]
                 // Inserting gathered info from inquirer into the roles table in the database
-                db.query('INSERT INTO roles (title, salary, dept_id) VALUES (?, ?, ?)', newRole)
+                db.query('INSERT INTO roles (title, salary, dept_id) VALUES (?,?,?)', newRole)
 
                 // Displaying table with new role added.
                 db.query('SELECT * FROM roles', function (err, res) {
@@ -233,12 +217,13 @@ const openDBConnection = () => {
     }
 
     const viewDeps = () => {
-        console.log('You are viewing all current departments in the employee_tracker database.')
+
         db.query('SELECT * FROM departments', function (err, res) {
             if (err) {
                 throw err
             } else {
                 console.table(res)
+                console.log('You are viewing all current departments in the employee_tracker database.')
                 openDBConnection()
             }
         })
