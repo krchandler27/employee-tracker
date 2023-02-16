@@ -162,7 +162,7 @@ const openDBConnection = () => {
             ])
             .then((response) => {
 
-              db.query('UPDATE employees SET role_id VALUE (?) WHERE employee_id VALUE (?)', response.role_id, response.employee_id)})
+              db.query('UPDATE employees SET (role_id) VALUE (?) WHERE (employee_id) VALUE (?)', response.role_id, response.employee_id)})
 
                 db.query('SELECT * FROM employees', function (err, res) {
                     if (err) {
