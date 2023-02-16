@@ -26,7 +26,7 @@ const openDBConnection = () => {
             choices: [
                 'View All Employees',
                 'Add New Employee',
-                'Update Current Employee',
+                'Update Employee Role',
                 'View All Roles',
                 'Add New Role',
                 'View All Departments',
@@ -128,9 +128,53 @@ const openDBConnection = () => {
             })
     }
 
-    // const updateEmployeeRole = () => {
+    const updateEmployeeRole = () => {
+        db.query('SELECT * FROM roles', function (err, res) {
+            if (err) {
+                throw err
+            } else {
+                console.table(res)
+            }
+        })
 
-    // }
+        db.query('SELECT * FROM employees', function (err, res) {
+            if (err) {
+                throw err
+                console.log(err)
+            } else {
+                console.table(res)
+            }
+        })
+        console.log('Scroll up to see current company roles and the list of employees.')
+
+        inquirer
+            .prompt([
+                {
+                    type: 'input',
+                    name: 'employee_id',
+                    message: 'Type the id of the employee whose role you would like to change:'
+                },
+                {
+                    type: 'input',
+                    name: 'role_id',
+                    message: 'Type the the new role id you would like to assign to this employee:'
+                }
+            ])
+            .then((response) => {
+
+              db.query('UPDATE employees SET role_id VALUE (?) WHERE employee_id VALUE (?)', response.role_id, response.employee_id)})
+
+                db.query('SELECT * FROM employees', function (err, res) {
+                    if (err) {
+                        throw err
+                        console.log(err)
+                    } else {
+                        console.table(res)
+                    }
+                })
+                console.log("See role id updated for specified employee.")
+                openDBConnection()
+            }
 
     const viewRoles = () => {
         console.log('You are now viewing all current employee roles in the employee_tracker database.')
